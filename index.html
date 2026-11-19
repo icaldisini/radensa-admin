@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>DENGUARD Admin — Konsol Surveilans DBD</title>
+<meta name="description" content="DENGUARD: Dengue Geospatial Early Warning and Risk Detection. Konsol surveilans dan perkiraan DBD per kecamatan DKI Jakarta.">
+<meta name="theme-color" content="#a50f1a">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>
+  try { var t = localStorage.getItem('denguard-admin-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<div class="small-screen">
+  <div>
+    <strong>DENGUARD Admin dirancang untuk layar laptop/PC.</strong>
+    <p>Buka di layar minimal 1200&nbsp;px. Untuk HP, gunakan aplikasi DENGUARD Warga.</p>
+  </div>
+</div>
+
+<div id="boot" class="boot">
+  <div class="boot-card">
+    <span class="logo-mark" aria-hidden="true"><img src="assets/img/logo.png" alt=""></span>
+    <div class="boot-brand">DENGUARD</div>
+    <div class="boot-tag">Dengue Geospatial Early Warning and Risk Detection</div>
+    <div class="boot-title">Memuat data surveilans</div>
+    <div class="boot-bar"><span id="boot-fill"></span></div>
+    <div class="boot-step" id="boot-step">Menghubungkan ke Supabase…</div>
+  </div>
+</div>
+
+<div id="app" class="shell" hidden>
+  <aside class="rail">
+    <a class="brand" href="#/beranda">
+      <span class="logo-mark" aria-hidden="true"><img src="assets/img/logo.png" alt=""></span>
+      <span class="brand-txt"><b>DENGUARD</b><small>Konsol Surveilans DBD</small></span>
+    </a>
+    <nav class="nav" id="nav"></nav>
+    <div class="rail-card" id="rail-foot"></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="scope" id="scope" hidden></div>
+      <div class="crumb" id="crumb"></div>
+      <div class="top-right">
+        <div class="epi" id="epi-now"></div>
+        <div class="fresh" id="fresh" tabindex="0"></div>
+        <a class="icon-btn" id="btn-bell" href="#/peringatan" title="Peringatan dini" aria-label="Peringatan dini"></a>
+        <button class="icon-btn" id="btn-theme" title="Ganti tema terang/gelap" aria-label="Ganti tema"></button>
+        <span class="avatar" title="Admin DENGUARD">AD</span>
+      </div>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+
+<div id="tip" class="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="data/kecamatan_44.js"></script>
+<script src="data/snapshot_sipeda.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/map.js"></script>
+<script src="assets/js/views/beranda.js"></script>
+<script src="assets/js/views/peta.js"></script>
+<script src="assets/js/views/forecast.js"></script>
+<script src="assets/js/views/kecamatan.js"></script>
+<script src="assets/js/views/eksplorasi.js"></script>
+<script src="assets/js/views/model.js"></script>
+<script src="assets/js/views/simulasi.js"></script>
+<script src="assets/js/views/peringatan.js"></script>
+<script src="assets/js/views/metodologi.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
