@@ -102,7 +102,7 @@
             <div class="metric"><div class="l">RMSE</div><div class="v">${fmt.num(S.headline.rmse, 2)}</div><div class="d">menghukum meleset besar</div></div>
             <div class="metric"><div class="l">MAPE</div><div class="v">${fmt.num(S.headline.mape, 1)}%</div><div class="d">tinggi saat kasus kecil</div></div>
           </div>
-          <div class="panel-note">Metrik di atas: evaluasi riset <b>${u.esc(S.headline.label)}</b> (LightGBM, sama dengan SIPEDA).${am?.isRefit ? ' Refit mingguan mewarisi metrik retune terakhir dan model baru hanya dipromosikan bila R² tidak turun lebih dari 5%.' : ''}</div>
+          <div class="panel-note">Metrik di atas: evaluasi riset <b>${u.esc(S.headline.label)}</b> (LightGBM Tweedie, evaluasi riset 20 fitur; model dua tahap 21 fitur yang berjalan memberi R² setara, sekitar 0,75–0,76 pada uji 2025).${am?.isRefit ? ' Refit mingguan mewarisi metrik retune terakhir dan model baru hanya dipromosikan bila R² tidak turun lebih dari 5%.' : ''}</div>
         </section>
         <section class="panel">
           <div class="panel-h"><h2><span class="hic">${u.icon('chart')}</span>Validasi Silang per Tahun</h2><span class="meta">${lr ? `retune <span class="mono">${u.esc(lr.versi)}</span> · rolling-origin` : ''}</span></div>
@@ -125,10 +125,10 @@
         </section>
       </div>
 
-      <div class="sec-title">Perbandingan 5 Model Kandidat <small>riset awal SIPEDA · rolling CV 3 fold (uji 2023, 2024, 2025)</small></div>
+      <div class="sec-title">Perbandingan 5 Model Kandidat <small>riset 20 fitur · rolling CV 3 fold (uji 2023, 2024, 2025)</small></div>
       ${models.length ? `
       <div class="model-cards mb24">${models.map((m) => `
-        <div class="mcard ${m.best ? 'best' : ''}">${m.best ? '<span class="best-tag">TERBAIK</span>' : ''}
+        <div class="mcard ${m.best ? 'best' : ''}">${m.best ? '<span class="best-tag">DIPAKAI</span>' : ''}
           <div class="mn">${u.esc(m.name.replace('_', ' '))}</div>
           <div class="ml">R²</div><div class="mr" style="color:${MCOLOR[m.key] || 'var(--brand)'}">${fmt.num(m.R2, 3)}</div>
           <div class="mm"><span>MAE</span><b>${fmt.num(m.MAE, 2)}</b></div>
@@ -144,19 +144,20 @@
         <section class="panel">
           <div class="panel-h"><h2><span class="hic">${u.icon('chart')}</span>R² per Fold CV</h2><span class="meta">nilai negatif dipotong di 0 pada grafik</span></div>
           <div class="panel-b"><div class="legend mb16" id="fold-leg"></div><div class="chart" id="fold"></div></div>
-          <div class="panel-note">Fold terakhir (uji 2025) paling relevan untuk kondisi sekarang. Poisson Ridge tidak stabil pada fold 2024 (R² sangat negatif), alasan model berbasis pohon dipilih.</div>
+          <div class="panel-note">Fold terakhir (uji 2025) paling relevan untuk kondisi sekarang. Poisson Ridge tidak stabil pada fold 2024 (R² sangat negatif), alasan model berbasis pohon dipilih. LightGBM, CatBoost, dan XGBoost nyaris seri (R² rata-rata 4 fold 0,707 · 0,705 · 0,692); LightGBM dipakai karena tuning dan retrain mingguannya jauh lebih cepat.</div>
         </section>
       </div>
 
       <div class="grid hs-37 mb24">
         <section class="panel">
-          <div class="panel-h"><h2><span class="hic">${u.icon('layers')}</span>Pentingnya Fitur · SHAP (riset awal)</h2><span class="meta">mean |SHAP|, top 15</span></div>
+          <div class="panel-h"><h2><span class="hic">${u.icon('layers')}</span>Pentingnya Fitur · SHAP (riset awal)</h2><span class="meta">mean |SHAP|, top 15 · 21 fitur</span></div>
           <div class="panel-b" id="shap"></div>
+          <div class="panel-note">Riset awal memakai 21 fitur, termasuk <b>spatial kasus</b>: rata-rata kasus aktual tetangga pada minggu yang sama. Model yang berjalan juga 21 fitur, tetapi fitur ke-21 berupa rata-rata <b>prediksi</b> tetangga (model dua tahap), karena kasus aktual minggu itu belum diketahui saat meramal; lihat kartu Kontribusi Fitur di atas.</div>
         </section>
         <section class="panel fill-col">
           <div class="panel-h"><h2><span class="hic">${u.icon('info')}</span>Cara Membaca</h2></div>
           <div class="cm-list">
-            <div class="cm-item"><i class="d-epi"></i><div><b>Kasus spasial &amp; lag</b><p>Kasus di kecamatan sendiri dan tetangga pada 1–2 minggu terakhir adalah prediktor terkuat: wabah menyebar dan bertahan.</p></div></div>
+            <div class="cm-item"><i class="d-epi"></i><div><b>Kasus spasial &amp; lag</b><p>Kasus di kecamatan sendiri dan tetangga pada 1–2 minggu terakhir (serta perkiraan tetangga di minggu yang sama) adalah prediktor terkuat: wabah menyebar dan bertahan.</p></div></div>
             <div class="cm-item"><i class="d-spa"></i><div><b>Endemisitas</b><p>Tingkat dasar kasus kecamatan menggeser prediksi ke atas atau bawah.</p></div></div>
             <div class="cm-item"><i class="d-ikl"></i><div><b>Iklim</b><p>Suhu dan kelembapan (dengan jeda) memengaruhi siklus hidup nyamuk; curah hujan menambah tempat berkembang biak.</p></div></div>
             <div class="cm-item"><i class="d-mus"></i><div><b>Musiman</b><p>Siklus sin/cos minggu menangkap pola tahunan.</p></div></div>
@@ -168,7 +169,7 @@
         <div class="panel-h"><h2><span class="hic">${u.icon('target')}</span>Prediksi vs Aktual · Fold Terakhir (2025)</h2>
           <div class="tools"><select class="sel" id="sc-model">${models.map((m) => `<option value="${m.key}" ${m.best ? 'selected' : ''}>${u.esc(m.name.replace('_', ' '))}</option>`).join('')}</select><span class="tag" id="sc-n"></span></div></div>
         <div class="panel-b"><div class="chart" id="scatter"></div></div>
-        <div class="panel-note">Titik ideal berada di garis putus-putus (prediksi = aktual). Sampel acak dari titik uji; LightGBM menunjukkan sebaran paling rapat tanpa bias sistematik.</div>
+        <div class="panel-note">Titik ideal berada di garis putus-putus (prediksi = aktual). Sampel acak dari titik uji evaluasi riset awal (21 fitur); sebaran model berbasis pohon serupa dan tanpa bias sistematik yang mencolok.</div>
       </section>
 
       <section class="panel mb24">

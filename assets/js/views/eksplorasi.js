@@ -76,7 +76,7 @@
         <section class="panel">
           <div class="panel-h"><h2><span class="hic">${u.icon('chart')}</span>Histogram Kasus DBD</h2><span class="meta">kasus per kecamatan per minggu</span></div>
           <div class="panel-b"><div class="chart" id="hist"></div></div>
-          <div class="panel-note">Distribusi sangat condong ke kanan (skewness ${fmt.num(mom.skew, 2)}): sebagian besar minggu hanya 0–5 kasus per kecamatan, tetapi ekornya panjang saat KLB. Karena itu model memakai fungsi loss <b>Tweedie</b> dan target log1p.</div>
+          <div class="panel-note">Distribusi sangat condong ke kanan (skewness ${fmt.num(mom.skew, 2)}): sebagian besar minggu hanya 0–5 kasus per kecamatan, tetapi ekornya panjang saat KLB. Karena itu model memakai fungsi loss <b>Tweedie</b>, yang sesuai untuk data hitungan seperti ini.</div>
         </section>
         <section class="panel">
           <div class="panel-h"><h2><span class="hic">${u.icon('list')}</span>Statistik Deskriptif</h2></div>

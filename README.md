@@ -48,7 +48,7 @@ Situs statis, misalnya Netlify atau GitHub Pages: *publish directory* = akar rep
 
 - **Supabase** (hanya `SELECT` dengan kunci publik): kasus DBD mingguan, iklim, perkiraan, ambang zonasi, riwayat model.
 - `data/kecamatan_44.js`: batas wilayah 44 kecamatan (GeoJSON).
-- `data/snapshot_sipeda.js`: snapshot statis hasil riset awal (perbandingan model, SHAP, VIF, Moran's I).
+- `data/snapshot_sipeda.js`: snapshot statis hasil riset (perbandingan 5 model dengan 20 fitur, uji 2023–2025; SHAP, VIF, dan Spearman dari riset awal 21 fitur; Moran's I).
 
 ## Catatan penting
 

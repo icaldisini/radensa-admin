@@ -93,6 +93,7 @@
     kecamatan_endemisitas: ['Endemisitas kecamatan', 'epi'],
     spatial_kasus_tetangga_lag1: ['Kasus tetangga (lag 1)', 'spa'],
     spatial_kasus_tetangga_lag2: ['Kasus tetangga (lag 2)', 'spa'],
+    spatial_kasus: ['Kasus tetangga (minggu sama)', 'spa'],
     curah_hujan_kumulatif: ['Curah hujan', 'ikl'],
     curah_hujan_lag1: ['Curah hujan (lag 1)', 'ikl'],
     curah_hujan_lag2: ['Curah hujan (lag 2)', 'ikl'],
@@ -304,7 +305,7 @@
     S.active = S.models.find((m) => m.is_active) || S.models[0] || null;
     S.lastRetune = S.models.find((m) => !m.isRefit) || null;
     // Metrik utama yang ditampilkan di seluruh aplikasi: evaluasi riset fold 3 (uji 2025)
-    // untuk LightGBM -- sama dengan SIPEDA. Metrik per-run di database (fold terakhir/refit)
+    // untuk LightGBM, model 20 fitur (sama dengan model produksi). Metrik per-run di database (fold terakhir/refit)
     // tetap tampil di halaman Model & Evaluasi sebagai riwayat versi.
     {
       const best = (window.DG_SNAP?.models || []).find((m) => m.key === 'lightgbm');
